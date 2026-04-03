@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+supabase
+alpaca-trade-api
+pydantic
+pycryptodome
+pyyaml
+python-dotenv
