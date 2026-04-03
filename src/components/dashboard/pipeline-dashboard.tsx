@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Terminal, Activity, ChevronRight, FileText, Target, Zap, Waves } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { SwarmVisualizer } from "./swarm-visualizer"
+import { EnforcerOverlay } from "./enforcer-overlay"
 
 type DashboardStep = 'SCAN' | 'PERSONA' | 'CONSENSUS' | 'REPORT'
 const STEPS: DashboardStep[] = ['SCAN', 'PERSONA', 'CONSENSUS', 'REPORT']
@@ -29,6 +30,7 @@ export function PipelineDashboard() {
     const [macroSignals, setMacroSignals] = React.useState<{ticker: string, reasoning: string, priority: string}[]>([])
     const [history, setHistory] = React.useState<any[]>([])
     const [showHistory, setShowHistory] = React.useState(false)
+    const [isEnforcing, setIsEnforcing] = React.useState(false)
 
     React.useEffect(() => {
         setIsLoadingStocks(true)
@@ -368,7 +370,7 @@ export function PipelineDashboard() {
 
                                             <button onClick={startSimulation} className="group relative px-24 py-8 bg-flame text-black font-black uppercase tracking-[0.8em] text-2xl transition-all hover:bg-white active:translate-y-1 overflow-hidden shadow-[0_0_100px_rgba(234,88,12,0.2)]">
                                                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                                                [ Launch_Swarm ]
+                                                [ Initialize_Swarm ]
                                             </button>
                                         </div>
                                     </motion.div>
@@ -402,11 +404,44 @@ export function PipelineDashboard() {
                                                 </div>
                                             </div>
                                             <p className="text-sm text-white/60 leading-relaxed mb-12 uppercase italic font-medium">{report?.consensus_reasoning}</p>
-                                            <button onClick={() => { setCurrentStep('SCAN'); setLogs([]); }} className="w-full bg-white text-black py-6 font-black uppercase tracking-[0.5em] text-lg hover:bg-flame hover:text-white transition-all shadow-[0_0_50px_rgba(255,255,255,0.1)]">[ Return_To_Core ]</button>
+                                            
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                <button 
+                                                    onClick={() => { setCurrentStep('SCAN'); setLogs([]); setReport(null); }} 
+                                                    className="bg-white/5 border-2 border-white/10 text-white/40 py-6 font-black uppercase tracking-[0.3em] text-sm hover:bg-white/10 hover:text-white transition-all"
+                                                >
+                                                    [ Return_To_Core ]
+                                                </button>
+                                                <button 
+                                                    onClick={() => {
+                                                        setIsEnforcing(true);
+                                                        addLog("ENFORCEMENT_PIPELINE_TRIGGERED", 'sys');
+                                                        addLog("SCANNING_INTENT_PLAN // ARMORCLAW_V2", 'ok');
+                                                        setTimeout(() => addLog(`VALIDATING_TICKER: ${report?.ticker}`, 'sys'), 1000);
+                                                        setTimeout(() => addLog("ISSUING_DELEGATION_TOKEN // SECURE_HANDSHAKE", 'ok'), 2500);
+                                                    }} 
+                                                    className="bg-flame text-black py-6 font-black uppercase tracking-[0.3em] text-sm hover:bg-white transition-all shadow-[0_0_50px_rgba(234,88,12,0.3)]"
+                                                >
+                                                    [ Launch_Pipeline ]
+                                                </button>
+                                            </div>
                                         </div>
                                     </motion.div>
                                 )}
                             </AnimatePresence>
+
+                            {/* Enforcement Overlay */}
+                            <EnforcerOverlay 
+                                isOpen={isEnforcing} 
+                                onClose={() => { 
+                                    setIsEnforcing(false); 
+                                    setCurrentStep('SCAN'); 
+                                    setLogs([]); 
+                                    setReport(null); 
+                                }} 
+                                report={report}
+                                logs={logs}
+                            />
                         </div>
                     </div>
                 </section>
