@@ -2,154 +2,105 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
 import { Instagram, Linkedin, Send, Twitter } from "lucide-react"
 
 function FooterSection() {
     return (
-        <footer className="relative border-t border-white/[0.08] bg-background-base text-text-primary transition-colors duration-300">
-            <div className="container mx-auto px-4 py-12 md:px-6 lg:px-8">
-                <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <footer className="relative bg-black text-white py-16 border-t-2 border-white/20">
+            {/* Grid Background */}
+            <div className="absolute inset-0 pointer-events-none opacity-20"
+                 style={{ 
+                    backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+                    backgroundSize: '40px 40px' 
+                 }} 
+            />
+
+            <div className="container mx-auto px-4 lg:px-8 relative z-10">
+                <div className="grid gap-12 md:gap-16 md:grid-cols-2 lg:grid-cols-4">
+                    
                     {/* Newsletter Section */}
-                    <div className="relative">
-                        <h2 className="mb-4 text-3xl font-bold font-mono tracking-tight text-text-primary">
-                            Stay Connected
-                        </h2>
-                        <p className="mb-6 text-text-secondary font-mono text-sm">
-                            Join our newsletter for the latest trading insights and platform updates.
+                    <div className="relative border-2 border-white/10 p-6 bg-black shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)]">
+                        <div className="absolute -top-3 left-4 bg-black px-2 font-mono text-flame text-sm font-bold tracking-widest">
+                            [ NETWORK_LINK ]
+                        </div>
+                        <p className="mb-6 text-gray-400 font-mono text-sm leading-relaxed uppercase">
+                            Establish persistent connection for security patches and enforcement logs.
                         </p>
-                        <form className="relative">
+                        <form className="relative flex">
                             <Input
                                 type="email"
-                                placeholder="Enter your email"
-                                className="pr-12 backdrop-blur-sm bg-background-card border-white/[0.08] text-text-primary placeholder:text-text-muted font-mono"
+                                placeholder="SYS_ADMIN_EMAIL"
+                                className="rounded-none border-2 border-white/20 bg-transparent text-white font-mono placeholder:text-gray-600 focus-visible:ring-0 focus-visible:border-flame"
                             />
                             <Button
                                 type="submit"
                                 size="icon"
-                                className="absolute right-1 top-1 h-8 w-8 rounded-full bg-flame text-white hover:bg-flame-dark transition-transform hover:scale-105"
+                                className="rounded-none bg-flame hover:bg-white text-black border-2 border-l-0 border-flame transition-colors w-12 h-10 px-0"
                             >
-                                <Send className="h-4 w-4" />
+                                <Send className="h-5 w-5" />
                                 <span className="sr-only">Subscribe</span>
                             </Button>
                         </form>
-                        <div className="absolute -right-4 top-0 h-24 w-24 rounded-full bg-flame/10 blur-2xl" />
                     </div>
 
                     {/* Quick Links */}
-                    <div>
-                        <h3 className="mb-4 text-lg font-semibold font-mono text-text-primary">Quick Links</h3>
-                        <nav className="space-y-2 text-sm font-mono">
-                            <a href="#features" className="block transition-colors hover:text-flame text-text-secondary">
-                                Features
-                            </a>
-                            <a href="#pricing" className="block transition-colors hover:text-flame text-text-secondary">
-                                Pricing
-                            </a>
-                            <a href="#" className="block transition-colors hover:text-flame text-text-secondary">
-                                Documentation
-                            </a>
-                            <a href="#" className="block transition-colors hover:text-flame text-text-secondary">
-                                API Reference
-                            </a>
-                            <a href="#" className="block transition-colors hover:text-flame text-text-secondary">
-                                Support
-                            </a>
+                    <div className="flex flex-col gap-4">
+                        <h3 className="text-lg font-black font-mono text-white tracking-widest border-l-4 border-flame pl-3 uppercase">
+                            Registry
+                        </h3>
+                        <nav className="space-y-3 text-sm font-mono tracking-widest flex flex-col items-start">
+                            {['ArmorClaw Core', 'Swarm Topologies', 'Policy Schemas', 'Audit Logs', 'Token Decryption'].map((link) => (
+                                <a key={link} href="#" className="border-b border-transparent hover:border-flame hover:text-flame text-gray-400 transition-colors uppercase">
+                                    {link}
+                                </a>
+                            ))}
                         </nav>
                     </div>
 
                     {/* Contact Us */}
-                    <div>
-                        <h3 className="mb-4 text-lg font-semibold font-mono text-text-primary">Contact Us</h3>
-                        <address className="space-y-2 text-sm font-mono not-italic text-text-secondary">
-                            <p>Devise - AI Trading Platform</p>
-                            <p>Mumbai, India</p>
-                            <p>Email: support@devise.trade</p>
-                            <p>Phone: +91 (800) 123-4567</p>
+                    <div className="flex flex-col gap-4">
+                        <h3 className="text-lg font-black font-mono text-white tracking-widest border-l-4 border-flame pl-3 uppercase">
+                            Terminal Access
+                        </h3>
+                        <address className="space-y-3 text-sm font-mono not-italic text-gray-400 uppercase tracking-widest">
+                            <p className="text-white font-bold">DEVISE ENGINE</p>
+                            <p>NODE=0x4A_MUMBAI</p>
+                            <p>PORT=SYS_DEF</p>
+                            <p className="text-cyan-500">COMM=SYS@DEVISE.TRADE</p>
                         </address>
                     </div>
 
                     {/* Follow Us */}
-                    <div className="relative">
-                        <h3 className="mb-4 text-lg font-semibold font-mono text-text-primary">Follow Us</h3>
-                        <div className="mb-6 flex space-x-4">
-                            <TooltipProvider>
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            className="rounded-full border-white/[0.08] hover:border-flame hover:bg-flame/10 transition-colors"
-                                        >
-                                            <Twitter className="h-4 w-4 text-flame" />
-                                            <span className="sr-only">Twitter</span>
-                                        </Button>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p className="font-mono">Follow us on Twitter</p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
-
-                            <TooltipProvider>
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            className="rounded-full border-white/[0.08] hover:border-flame hover:bg-flame/10 transition-colors"
-                                        >
-                                            <Linkedin className="h-4 w-4 text-flame" />
-                                            <span className="sr-only">LinkedIn</span>
-                                        </Button>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p className="font-mono">Connect on LinkedIn</p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
-
-                            <TooltipProvider>
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            className="rounded-full border-white/[0.08] hover:border-flame hover:bg-flame/10 transition-colors"
-                                        >
-                                            <Instagram className="h-4 w-4 text-flame" />
-                                            <span className="sr-only">Instagram</span>
-                                        </Button>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p className="font-mono">Follow on Instagram</p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
+                    <div className="flex flex-col gap-4">
+                        <h3 className="text-lg font-black font-mono text-white tracking-widest border-l-4 border-flame pl-3 uppercase">
+                            Broadcast
+                        </h3>
+                        <div className="flex space-x-4">
+                            {[Twitter, Linkedin, Instagram].map((Icon, idx) => (
+                                <Button
+                                    key={idx}
+                                    variant="outline"
+                                    size="icon"
+                                    className="rounded-none border-2 border-white/20 bg-transparent text-white hover:border-flame hover:bg-flame hover:text-black transition-colors min-w-[48px] min-h-[48px]"
+                                >
+                                    <Icon className="h-5 w-5" />
+                                </Button>
+                            ))}
                         </div>
                     </div>
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/[0.08] pt-8 text-center md:flex-row">
-                    <p className="text-sm text-text-secondary font-mono">
-                        © 2026 Devise. All rights reserved.
+                <div className="mt-20 flex flex-col items-center justify-between gap-6 border-t-2 border-white/20 pt-8 text-center md:flex-row">
+                    <p className="text-sm text-gray-500 font-mono tracking-widest uppercase">
+                        © 2026 DEVISE. NO RIGHTS RESERVED. <span className="text-flame font-bold">FAIL CLOSED.</span>
                     </p>
-                    <nav className="flex gap-4 text-sm font-mono">
-                        <a href="#" className="transition-colors hover:text-flame text-text-secondary">
-                            Privacy Policy
-                        </a>
-                        <a href="#" className="transition-colors hover:text-flame text-text-secondary">
-                            Terms of Service
-                        </a>
-                        <a href="#" className="transition-colors hover:text-flame text-text-secondary">
-                            Risk Disclosure
-                        </a>
+                    <nav className="flex flex-wrap justify-center gap-6 text-sm font-mono tracking-widest">
+                        {['Privacy_Policy', 'Zero_Trust_Terms', 'Risk_Disclosure'].map((link) => (
+                            <a key={link} href="#" className="text-gray-500 hover:text-white transition-colors uppercase">
+                                {link}
+                            </a>
+                        ))}
                     </nav>
                 </div>
             </div>

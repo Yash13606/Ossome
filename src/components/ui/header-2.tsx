@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useScroll } from '@/components/ui/use-scroll';
@@ -12,16 +12,16 @@ export function Header() {
 
     const links = [
         {
-            label: 'Features',
+            label: 'ARCHITECTURE',
+            href: '#architecture',
+        },
+        {
+            label: 'FEATURES',
             href: '#features',
         },
         {
-            label: 'Pricing',
+            label: 'DEPLOYMENT',
             href: '#pricing',
-        },
-        {
-            label: 'About',
-            href: '#about',
         },
     ];
 
@@ -43,45 +43,52 @@ export function Header() {
     return (
         <header
             className={cn(
-                'sticky top-0 z-50 mx-auto w-full max-w-5xl border-b border-transparent md:rounded-md md:border md:transition-all md:ease-out',
+                'sticky top-0 z-50 mx-auto w-full border-b-2 border-white/10 transition-all ease-out bg-black/80 backdrop-blur-md',
                 {
-                    'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg md:top-4 md:max-w-4xl md:shadow':
-                        scrolled && !open,
-                    'bg-background/90': open,
+                    'border-flame shadow-[0_4px_0_0_#ea580c]': scrolled && !open,
+                    'bg-black': open,
                 },
             )}
         >
             <nav
                 className={cn(
-                    'flex h-14 w-full items-center justify-between px-4 md:h-12 md:transition-all md:ease-out',
+                    'flex h-16 w-full items-center justify-between px-4 md:px-8',
                     {
-                        'md:px-2': scrolled,
+                        'h-14': scrolled,
                     },
                 )}
             >
-                <div className="flex items-center gap-2">
-                    <img src="/logo.jpeg" alt="Logo" className="h-6 w-auto" />
-                    <span className="font-bold text-lg hidden sm:block">DEVISE</span>
-                </div>
-                <div className="hidden items-center gap-2 md:flex">
+                <Link to="/" className="flex items-center gap-2.5 group cursor-pointer hover:opacity-80 transition-opacity">
+                    <div className="w-7 h-7 bg-flame text-black flex items-center justify-center font-black font-mono text-lg border border-black shadow-[2px_2px_0px_0px_white]">
+                        D
+                    </div>
+                    <span className="font-bold text-lg hidden sm:block font-mono tracking-widest text-white uppercase">
+                        DEVISE
+                    </span>
+                </Link>
+                <div className="hidden items-center gap-6 md:flex">
                     {links.map((link, i) => (
-                        <a key={i} className={buttonVariants({ variant: 'ghost' })} href={link.href}>
+                        <a key={i} className="text-gray-400 font-mono text-sm tracking-widest hover:text-flame transition-colors" href={link.href}>
                             {link.label}
                         </a>
                     ))}
                     <Link to="/signin">
-                        <Button variant="outline">Sign In</Button>
+                        <Button variant="outline" className="rounded-none border-2 border-white/20 bg-transparent text-white font-mono uppercase hover:bg-white hover:text-black">
+                            Sys_Login
+                        </Button>
                     </Link>
-                    <Button className="bg-flame hover:bg-flame-dark text-white">Get Started</Button>
+                    <Button className="rounded-none bg-flame border-2 border-flame text-black font-mono font-bold uppercase hover:bg-black hover:text-flame transition-colors">
+                        Launch Pipeline
+                    </Button>
                 </div>
-                <Button size="icon" variant="outline" onClick={() => setOpen(!open)} className="md:hidden">
+                <Button size="icon" variant="outline" onClick={() => setOpen(!open)} className="md:hidden rounded-none border-white/20 bg-black text-white hover:bg-flame hover:text-black hover:border-flame">
                     <MenuToggleIcon open={open} className="size-5" duration={300} />
                 </Button>
             </nav>
 
             <div
                 className={cn(
-                    'bg-background/90 fixed top-14 right-0 bottom-0 left-0 z-50 flex flex-col overflow-hidden border-y md:hidden',
+                    'bg-black fixed top-16 right-0 bottom-0 left-0 z-50 flex flex-col overflow-hidden border-t-2 border-white/10 md:hidden',
                     open ? 'block' : 'hidden',
                 )}
             >
@@ -89,30 +96,30 @@ export function Header() {
                     data-slot={open ? 'open' : 'closed'}
                     className={cn(
                         'data-[slot=open]:animate-in data-[slot=open]:zoom-in-95 data-[slot=closed]:animate-out data-[slot=closed]:zoom-out-95 ease-out',
-                        'flex h-full w-full flex-col justify-between gap-y-2 p-4',
+                        'flex h-full w-full flex-col justify-between gap-y-8 p-10',
                     )}
                 >
-                    <div className="grid gap-y-2">
+                    <div className="grid gap-y-4">
                         {links.map((link) => (
                             <a
                                 key={link.label}
-                                className={buttonVariants({
-                                    variant: 'ghost',
-                                    className: 'justify-start',
-                                })}
+                                className="font-mono text-2xl tracking-[0.2em] text-gray-300 hover:text-flame uppercase border-l-4 border-transparent hover:border-flame pl-6 py-2 transition-all"
                                 href={link.href}
+                                onClick={() => setOpen(false)}
                             >
                                 {link.label}
                             </a>
                         ))}
                     </div>
-                    <div className="flex flex-col gap-2">
-                        <Link to="/signin" className="w-full">
-                            <Button variant="outline" className="w-full">
-                                Sign In
+                    <div className="flex flex-col gap-6 pb-20">
+                        <Link to="/signin" className="w-full" onClick={() => setOpen(false)}>
+                            <Button variant="outline" className="w-full rounded-none border-2 border-white/20 bg-transparent text-white font-mono uppercase h-14 text-lg">
+                                Sys_Login
                             </Button>
                         </Link>
-                        <Button className="w-full bg-flame hover:bg-flame-dark text-white">Get Started</Button>
+                        <Button className="w-full rounded-none bg-flame border-2 border-flame text-black font-mono font-bold uppercase h-14 text-lg">
+                            Launch Pipeline
+                        </Button>
                     </div>
                 </div>
             </div>

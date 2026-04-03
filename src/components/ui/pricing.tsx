@@ -1,16 +1,7 @@
 "use client";
 
-import { buttonVariants } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { Check, Star } from "lucide-react";
-import { useState, useRef } from "react";
-// @ts-ignore
-import confetti from "canvas-confetti";
-import NumberFlow from "@number-flow/react";
+import { Check, Terminal, ShieldAlert } from "lucide-react";
 
 interface PricingPlan {
     name: string;
@@ -33,172 +24,97 @@ interface PricingProps {
 
 export function Pricing({
     plans,
-    title = "Simple, Transparent Pricing",
-    description = "Choose the plan that works for you\nAll plans include access to our platform, lead generation tools, and dedicated support.",
+    title = "Deployment Options",
+    description = "Adopt intent-aware pipelines at any scale.",
     className,
 }: PricingProps) {
-    const [isMonthly, setIsMonthly] = useState(true);
-    const isDesktop = useMediaQuery("(min-width: 768px)");
-    const switchRef = useRef<HTMLButtonElement>(null);
-
-    const handleToggle = (checked: boolean) => {
-        setIsMonthly(!checked);
-        if (checked && switchRef.current) {
-            const rect = switchRef.current.getBoundingClientRect();
-            const x = rect.left + rect.width / 2;
-            const y = rect.top + rect.height / 2;
-
-            confetti({
-                particleCount: 50,
-                spread: 60,
-                origin: {
-                    x: x / window.innerWidth,
-                    y: y / window.innerHeight,
-                },
-                colors: [
-                    "#FE7F2D",
-                    "#E56F24",
-                    "#FF8C42",
-                    "#FFA05C",
-                ],
-                ticks: 200,
-                gravity: 1.2,
-                decay: 0.94,
-                startVelocity: 30,
-                shapes: ["circle"],
-            });
-        }
-    };
-
     return (
-        <div className={cn("container py-20 bg-background-base", className)} id="pricing">
-            <div className="text-center space-y-6 mb-16 max-w-4xl mx-auto px-4">
-                <h2 className="text-4xl font-bold font-mono tracking-tight sm:text-5xl text-text-primary">
+        <div className={cn("container py-20 md:py-32 bg-black min-h-screen border-b-2 border-white/10 relative", className)} id="pricing">
+            <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
+                 style={{ 
+                    backgroundImage: `repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)`,
+                    backgroundSize: '10px 10px' 
+                 }} 
+            />
+
+            <div className="text-center space-y-6 mb-16 md:mb-24 max-w-4xl mx-auto px-4 relative z-10">
+                <div className="inline-flex items-center justify-center p-3 md:p-4 bg-flame.10 border border-flame/30 text-flame mb-6 md:mb-8 shadow-[4px_4px_0px_0px_#ea580c]">
+                    <Terminal className="w-6 h-6 md:w-8 md:h-8" />
+                </div>
+                <h2 className="text-3xl md:text-6xl font-black font-mono uppercase tracking-tighter text-white">
                     {title}
                 </h2>
-                <p className="text-text-secondary text-base md:text-lg whitespace-pre-line font-mono leading-relaxed">
+                <p className="text-gray-400 text-base md:text-xl font-mono leading-relaxed border-l-2 border-flame pl-6 max-w-2xl mx-auto text-left">
                     {description}
                 </p>
             </div>
 
-            <div className="flex justify-center items-center gap-4 mb-12">
-                <span className="font-semibold font-mono text-text-secondary text-sm md:text-base">Monthly</span>
-                <Label>
-                    <Switch
-                        ref={switchRef as any}
-                        checked={!isMonthly}
-                        onCheckedChange={handleToggle}
-                        className="relative"
-                    />
-                </Label>
-                <span className="font-semibold font-mono text-text-secondary text-sm md:text-base">
-                    Annual <span className="text-flame">(Save 20%)</span>
-                </span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 max-w-7xl mx-auto px-4 relative z-10">
                 {plans.map((plan, index) => (
-                    <motion.div
+                    <div
                         key={index}
-                        initial={{ y: 50, opacity: 0 }}
-                        whileInView={
-                            isDesktop
-                                ? {
-                                    y: plan.isPopular ? -20 : 0,
-                                    opacity: 1,
-                                    scale: plan.isPopular ? 1.05 : 1.0,
-                                }
-                                : { y: 0, opacity: 1 }
-                        }
-                        viewport={{ once: true }}
-                        transition={{
-                            duration: 0.8,
-                            type: "spring",
-                            stiffness: 100,
-                            damping: 30,
-                            delay: index * 0.2,
-                        }}
                         className={cn(
-                            "rounded-2xl border p-8 bg-background-card flex flex-col relative",
-                            plan.isPopular ? "border-flame border-2 shadow-elevated" : "border-white/[0.08]",
+                            "border-2 bg-black flex flex-col relative p-6 md:p-10 transition-transform duration-300 hover:-translate-y-2 hover:-translate-x-2",
+                            plan.isPopular 
+                                ? "border-flame shadow-[12px_12px_0px_0px_#ea580c]" 
+                                : "border-white/20 shadow-[12px_12px_0px_0px_rgba(255,255,255,0.05)]",
                             plan.isPopular && "z-10"
                         )}
                     >
+                        {/* Decorative corner brackets */}
+                        <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-current text-white"></div>
+                        <div className="absolute -top-2 -right-2 w-4 h-4 border-t-2 border-r-2 border-current text-white"></div>
+                        <div className="absolute -bottom-2 -left-2 w-4 h-4 border-b-2 border-l-2 border-current text-white"></div>
+                        <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-current text-white"></div>
+
                         {plan.isPopular && (
-                            <div className="absolute top-0 right-0 bg-flame py-1 px-3 rounded-bl-xl rounded-tr-xl flex items-center gap-1">
-                                <Star className="text-white h-4 w-4 fill-current" />
-                                <span className="text-white text-sm font-mono font-semibold">
-                                    Popular
-                                </span>
+                            <div className="absolute -top-4 w-full left-0 flex justify-center">
+                                <div className="bg-flame text-black font-black uppercase tracking-widest text-xs px-4 py-1 border-2 border-black flex items-center gap-2">
+                                    <ShieldAlert className="w-4 h-4" /> Recommended for Institutions
+                                </div>
                             </div>
                         )}
-                        <div className="flex-1 flex flex-col">
-                            <p className="text-base font-semibold font-mono text-text-secondary uppercase tracking-wider text-center">
+                        
+                        <div className="flex-1 flex flex-col mt-4">
+                            <p className="text-xl font-black font-mono text-white uppercase tracking-widest bg-white/5 inline-block px-4 py-2 self-start border border-white/10 mb-8">
                                 {plan.name}
                             </p>
-                            <div className="mt-6 flex items-baseline justify-center gap-x-2">
-                                <span className="text-5xl font-bold tracking-tight text-text-primary font-mono">
-                                    <NumberFlow
-                                        value={
-                                            isMonthly ? Number(plan.price) : Number(plan.yearlyPrice)
-                                        }
-                                        format={{
-                                            style: "currency",
-                                            currency: "INR",
-                                            minimumFractionDigits: 0,
-                                            maximumFractionDigits: 0,
-                                        }}
-                                        transformTiming={{
-                                            duration: 500,
-                                            easing: "ease-out" as any,
-                                        }}
-                                        willChange
-                                        className="tabular-nums"
-                                    />
+                            
+                            <div className="flex items-baseline gap-x-2 mb-2 border-b-2 border-white/10 pb-8">
+                                <span className="text-4xl md:text-6xl font-black tracking-tighter text-white font-mono uppercase">
+                                    {plan.price === "0" ? "FREE" : plan.price}
                                 </span>
-                                {plan.period !== "one-time" && (
-                                    <span className="text-sm font-semibold font-mono leading-6 tracking-wide text-text-muted">
-                                        / {plan.period}
-                                    </span>
-                                )}
                             </div>
 
-                            <p className="text-xs leading-5 text-text-muted font-mono mt-2 text-center">
-                                {isMonthly ? "billed monthly" : "billed annually"}
+                            <p className="text-base leading-6 text-gray-400 font-mono mt-8 h-12">
+                                {plan.description}
                             </p>
 
-                            <ul className="mt-8 gap-3 flex flex-col">
+                            <ul className="mt-8 gap-4 flex flex-col flex-1">
                                 {plan.features.map((feature, idx) => (
-                                    <li key={idx} className="flex items-start gap-3">
+                                    <li key={idx} className="flex items-start gap-3 border border-white/5 p-3 bg-white/[0.02]">
                                         <Check className="h-5 w-5 text-flame mt-0.5 flex-shrink-0" />
-                                        <span className="text-text-secondary font-mono text-sm leading-relaxed">{feature}</span>
+                                        <span className="text-gray-300 font-mono text-sm leading-relaxed">{feature}</span>
                                     </li>
                                 ))}
                             </ul>
 
-                            <hr className="w-full my-6 border-white/[0.08]" />
-
                             <a
                                 href={plan.href}
                                 className={cn(
-                                    buttonVariants({
-                                        variant: "outline",
-                                    }),
-                                    "group relative w-full gap-2 overflow-hidden text-base font-semibold font-mono tracking-tight",
-                                    "transform-gpu ring-offset-current transition-all duration-300 ease-out",
-                                    "hover:ring-2 hover:ring-flame hover:ring-offset-1",
+                                    "mt-10 block w-full py-5 text-center text-lg font-black font-mono tracking-widest border-2 transition-colors duration-300 relative group",
                                     plan.isPopular
-                                        ? "bg-flame text-white hover:bg-flame-dark border-flame"
-                                        : "bg-background-card text-text-primary hover:bg-flame hover:text-white border-white/[0.08]"
+                                        ? "bg-flame border-flame text-black hover:bg-black hover:text-flame"
+                                        : "bg-black border-white text-white hover:bg-white hover:text-black"
                                 )}
                             >
-                                {plan.buttonText}
+                                <div className={cn("absolute inset-0 translate-x-1.5 translate-y-1.5 -z-10 transition-transform group-hover:translate-x-3 group-hover:translate-y-3",
+                                    plan.isPopular ? "bg-flame" : "bg-white/20"
+                                )}></div>
+                                <span>{plan.buttonText}</span>
                             </a>
-                            <p className="mt-6 text-xs leading-5 text-text-muted font-mono text-center">
-                                {plan.description}
-                            </p>
                         </div>
-                    </motion.div>
+                    </div>
                 ))}
             </div>
         </div>

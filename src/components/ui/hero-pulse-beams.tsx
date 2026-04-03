@@ -111,9 +111,9 @@ export const HeroPulseBeams = React.forwardRef<HTMLElement, HeroPulseBeamsProps>
     (
         {
             className,
-            title = "Build Your Trading Strategy with AI",
-            subtitle = "Transform your trading ideas into reality with our intelligent strategy builder. No coding required.",
-            buttonText = "Launch AI Builder",
+            title = "Intent-Aware Autonomous Execution",
+            subtitle = "Transform ambiguous instructions into deterministic financial boundaries using the OpenClaw-based Devise pipeline.",
+            buttonText = "Initialize Swarm",
             buttonHref = "/builder",
             beams = defaultBeams,
             gradientColors = { start: "#FE7F2D", middle: "#FF6B35", end: "#FE7F2D" },

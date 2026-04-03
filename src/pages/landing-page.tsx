@@ -1,72 +1,64 @@
 import { MynaHero } from "@/components/ui/myna-hero"
+import { DeviceArchitectureScroll } from "@/components/ui/device-architecture-scroll"
+import { AttackScenariosScroll } from "@/components/ui/attack-scenarios-scroll"
 import { UnifiedFeatures } from "@/components/ui/unified-features"
-import { HeroPulseBeams } from "@/components/ui/hero-pulse-beams"
 import { Pricing } from "@/components/ui/pricing"
 import { FAQ } from "@/components/ui/faq"
 import { FooterSection } from "@/components/ui/footer-section"
 
 const tradingPlans = [
     {
-        name: "LEARNER",
-        price: "2999",
-        yearlyPrice: "2399",
+        name: "DEV SANDBOX",
+        price: "0",
+        yearlyPrice: "0",
         period: "month",
         features: [
-            "Up to 3 active strategies",
-            "Basic backtesting (1 year data)",
-            "Paper trading only",
-            "Community support",
-            "Basic performance analytics",
-            "Email alerts",
+            "Local environment only",
+            "Swarm Analyst access",
+            "Paper trading integration",
+            "Basic DevicePolicy schema",
+            "Community Support",
         ],
-        description: "Perfect for beginners learning algorithmic trading",
-        buttonText: "Start Learning",
+        description: "For developers testing AI agent safety features.",
+        buttonText: "Start Building",
         href: "#signup",
         isPopular: false,
     },
     {
-        name: "TRADER",
-        price: "9999",
-        yearlyPrice: "7999",
+        name: "CLAUDE CLOUD",
+        price: "$49",
+        yearlyPrice: "$490",
         period: "month",
         features: [
-            "Unlimited strategies",
-            "Advanced backtesting (5+ years)",
-            "Live trading integration",
-            "Multi-stage validation system",
-            "Emotion detection AI",
-            "Real-time market data",
-            "Priority support (24h response)",
-            "Advanced analytics dashboard",
-            "Risk management tools",
+            "Anthropic Claude backend",
+            "Zero local hardware requirements",
+            "Cloud-hosted Swarm Analyst",
+            "Standard DevisePolicy limits",
+            "Email Support",
         ],
-        description: "Ideal for serious traders ready to go live",
-        buttonText: "Start Trading",
-        href: "#signup",
-        isPopular: true,
+        description: "For users without the local compute to run Swarm Analyst at full capacity.",
+        buttonText: "Deploy on Claude",
+        href: "#claude",
+        isPopular: false,
     },
     {
-        name: "PROFESSIONAL",
-        price: "24999",
-        yearlyPrice: "19999",
-        period: "month",
+        name: "ENTERPRISE",
+        price: "Contact",
+        yearlyPrice: "Contact",
+        period: "year",
         features: [
-            "Everything in Trader",
-            "Multiple broker integrations",
-            "Custom strategy development",
-            "Dedicated account manager",
-            "1-hour support response",
-            "White-label options",
-            "API access for automation",
-            "Custom validation rules",
-            "Advanced risk controls",
-            "Portfolio management",
+            "ArmorClaw primary enforcement",
+            "Cryptographic DeviceTokens",
+            "Live trading integration",
+            "Custom ticker universes",
+            "SLA guarantees",
+            "Dedicated onboarding",
         ],
-        description: "For professional traders and institutions",
+        description: "Full intent enforcement for financial institutions.",
         buttonText: "Contact Sales",
         href: "#contact",
-        isPopular: false,
-    },
+        isPopular: true,
+    }
 ];
 
 import { Header } from "@/components/ui/header-2"
@@ -76,14 +68,13 @@ export function LandingPage() {
         <div className="min-h-screen bg-background-base">
             <Header />
             <MynaHero />
+            <DeviceArchitectureScroll />
+            <AttackScenariosScroll />
             <UnifiedFeatures />
-            <HeroPulseBeams />
             <Pricing
                 plans={tradingPlans}
-                title="Choose Your Trading Plan"
-                description="All plans include AI-powered strategy building, comprehensive validation, and safety-first approach.
-Start with paper trading and upgrade when you're ready for live markets."
-                className="mt-32"
+                title="Deployment Options"
+                description="Adopt intent-aware pipelines at any scale. Ensure your autonomous financial agents never exceed their authorized scope."
             />
             <FAQ />
             <FooterSection />

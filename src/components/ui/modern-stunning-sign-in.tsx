@@ -1,9 +1,8 @@
-"use client"
-
 import * as React from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn1 = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [error, setError] = React.useState("");
@@ -14,54 +13,75 @@ const SignIn1 = () => {
 
     const handleSignIn = () => {
         if (!email || !password) {
-            setError("Please enter both email and password.");
+            setError("SYS_ERR: MISSING_CREDENTIALS");
             return;
         }
         if (!validateEmail(email)) {
-            setError("Please enter a valid email address.");
+            setError("SYS_ERR: INVALID_FORMAT");
             return;
         }
         setError("");
-        alert("Sign in successful! (Demo)");
+        alert("ACCESS_GRANTED: REDIRECTING TO TERMINAL...");
+    };
+
+    const handleDemoLogin = () => {
+        setEmail("admin@devise.trade");
+        setPassword("********");
+        setError("");
+        setTimeout(() => {
+            navigate("/dashboard");
+        }, 800);
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-[#121212] relative overflow-hidden w-full">
-            {/* Background Gradients */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
-                <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-flame/5 rounded-full blur-[100px]" />
-                <div className="absolute bottom-[20%] right-[10%] w-[500px] h-[500px] bg-flame/5 rounded-full blur-[100px]" />
-            </div>
+        <div className="min-h-screen flex flex-col items-center justify-center bg-black relative overflow-hidden w-full p-4">
+            {/* Grid Background */}
+            <div className="absolute inset-0 pointer-events-none opacity-20"
+                 style={{ 
+                    backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+                    backgroundSize: '40px 40px' 
+                 }} 
+            />
 
-            {/* Centered glass card */}
-            <div className="relative z-10 w-full max-w-sm rounded-3xl bg-background-elevated backdrop-blur-sm border border-white/10 shadow-2xl p-8 flex flex-col items-center">
+            {/* Glowing Accent Orbs */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-flame/10 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3" />
+
+            {/* Centered Brutalist card */}
+            <div className="relative z-10 w-full max-w-[380px] bg-black border-2 border-white/20 shadow-[12px_12px_0px_0px_rgba(255,255,255,0.1)] p-6 sm:p-8 flex flex-col items-center">
+                {/* Decorative corner brackets */}
+                <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-flame"></div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-flame"></div>
+                <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-flame"></div>
+                <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-flame"></div>
+
                 {/* Logo */}
-                <div className="flex items-center justify-center mb-6">
-                    <img src="/logo.svg" alt="Devise Logo" className="w-20 h-20 object-contain rounded-xl shadow-lg border border-white/10" />
+                <div className="w-12 h-12 bg-flame text-black flex items-center justify-center font-black font-mono text-xl border-2 border-black shadow-[4px_4px_0px_0px_white] mb-6">
+                    D
                 </div>
+
                 {/* Title */}
-                <h2 className="text-2xl font-bold text-white mb-2 text-center font-mono tracking-tight">
-                    Welcome Back
+                <h2 className="text-2xl font-black text-white mb-1 text-center font-mono tracking-tighter uppercase">
+                    SYSTEM_ACCESS
                 </h2>
-                <p className="text-text-secondary text-sm mb-8 text-center font-mono">
-                    Sign in to continue building your strategies
+                <p className="text-gray-500 text-[10px] mb-8 text-center font-mono uppercase tracking-[0.2em]">
+                    Initialize connection to Devise Pipeline
                 </p>
 
                 {/* Form */}
                 <div className="flex flex-col w-full gap-4">
                     <div className="w-full flex flex-col gap-3">
                         <input
-                            placeholder="Email"
+                            placeholder="AUTH_EMAIL"
                             type="email"
                             value={email}
-                            className="w-full px-5 py-3 rounded-xl bg-background-base/50 border border-white/10 text-white placeholder-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-flame/50 focus:border-flame transition-all font-mono"
+                            className="w-full px-5 py-4 bg-white/5 border-2 border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-flame transition-all font-mono uppercase text-sm"
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <input
-                            placeholder="Password"
+                            placeholder="AUTH_PASSWORD"
                             type="password"
                             value={password}
-                            className="w-full px-5 py-3 rounded-xl bg-background-base/50 border border-white/10 text-white placeholder-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-flame/50 focus:border-flame transition-all font-mono"
+                            className="w-full px-5 py-4 bg-white/5 border-2 border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-flame transition-all font-mono uppercase text-sm"
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         {error && (
@@ -76,9 +96,16 @@ const SignIn1 = () => {
                     <div>
                         <button
                             onClick={handleSignIn}
-                            className="w-full bg-flame hover:bg-flame-dark text-white font-bold font-mono px-5 py-3 rounded-xl shadow-lg shadow-flame/20 hover:shadow-flame/40 transition-all duration-300 mb-4 text-sm tracking-wide"
+                            className="w-full bg-flame py-4 text-black font-black font-mono uppercase tracking-widest hover:bg-white transition-colors mb-4 border-2 border-flame"
                         >
-                            Sign In
+                            [ SIGN_IN ]
+                        </button>
+
+                        <button
+                            onClick={handleDemoLogin}
+                            className="w-full bg-transparent py-4 text-flame font-black font-mono uppercase tracking-widest border-2 border-flame/30 hover:border-flame hover:bg-flame/10 transition-all mb-6 shadow-[4px_4px_0px_0px_rgba(234,88,12,0.1)] hover:shadow-[4px_4px_0px_0px_#ea580c]"
+                        >
+                            RUN_DEMO_INSTANCE
                         </button>
 
                         <div className="relative mb-6">
@@ -93,13 +120,13 @@ const SignIn1 = () => {
                         </div>
 
                         {/* Google Sign In */}
-                        <button className="w-full flex items-center justify-center gap-3 bg-white text-black hover:bg-gray-100 rounded-xl px-5 py-3 font-medium shadow-lg transition-all duration-300 mb-2 text-sm font-mono tracking-tight">
+                        <button className="w-full flex items-center justify-center gap-4 bg-white/5 border-2 border-white/10 text-white hover:bg-white hover:text-black py-4 font-black font-mono uppercase tracking-widest transition-all mb-6">
                             <img
                                 src="https://www.svgrepo.com/show/475656/google-color.svg"
                                 alt="Google"
                                 className="w-5 h-5"
                             />
-                            Google
+                            Google_Auth
                         </button>
 
                         <div className="w-full text-center mt-6">
